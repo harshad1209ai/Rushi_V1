@@ -1,32 +1,36 @@
-# RUSHI AI V1.0 — Android project
+# RUSHI AI V2 – Android Studio starter
 
-This is a native Android starter app built with Kotlin and Jetpack Compose.
+## What this project contains
+- Native Android Java starter app and basic assistant UI.
+- Text-to-speech replies using Android TTS.
+- Speech input through Android SpeechRecognizer (offline preference requested on Android 13+, but actual offline availability depends on installed speech services/language packs).
+- Flashlight toggle using CameraManager.
+- Wi-Fi settings shortcut and Bluetooth control panel/settings shortcut.
+- Camera launch.
+- Safe call flow using ACTION_DIAL (does not silently place calls).
+- LocalAiEngine integration boundary for a real offline LLM.
 
-## Included in this V1.0 starter
-- Dark futuristic RUSHI interface
-- Text chat UI
-- Android speech recognition (microphone permission requested at runtime)
-- Android Text-to-Speech replies
-- Local demo responses
+## Important: this is not yet a complete ChatGPT-level offline AI
+No large language model weights are bundled. A capable local model can occupy multiple GB and performance depends on device RAM, chipset, storage and thermal limits. The next engineering step is integrating a compatible inference runtime (for example llama.cpp with a suitable quantized GGUF model) and selecting a model that the target phone can actually run.
 
-## Not connected yet
-This build does **not** include a cloud AI model/API, persistent long-term memory, wake-word listening, or autonomous phone control. The assistant currently uses local demo replies. These require the next development steps and, for cloud AI, a secure backend and API credentials.
+## Build
+1. Open this folder in Android Studio (current stable).
+2. Allow Gradle sync; use JDK 17.
+3. Install Android SDK Platform 35 and Build Tools as prompted.
+4. Build > Build Bundle(s) / APK(s) > Build APK(s).
 
-## Build an installable debug APK
-1. Install Android Studio and its Android SDK (API 35) on a computer.
-2. Open this project folder in Android Studio.
-3. Allow Gradle sync to complete.
-4. Select **Build > Build Bundle(s) / APK(s) > Build APK(s)**.
-5. Android Studio creates the debug APK at:
-   `app/build/outputs/apk/debug/app-debug.apk`
+No Gradle wrapper is included; Android Studio can sync using its configured Gradle installation. For command-line builds, generate a wrapper from Android Studio/Gradle.
 
-Alternatively, push this project to a GitHub repository. The included GitHub Actions workflow builds the debug APK and makes it available as a workflow artifact.
+## Source APK limitations
+The provided V1 file was an APK, not an Android Studio source project. APKs contain compiled DEX bytecode, a compiled manifest and packaged resources. They do not preserve the original Kotlin/Java source, comments, Gradle files, project structure, signing configuration or model assets. This V2 starter is therefore a clean project scaffold, not a guaranteed in-place upgrade or exact recreation of V1. The original V1 source ZIP is still required to preserve its existing screens and functionality accurately.
 
-## Install on Android
-Download `app-debug.apk` to your phone, open it, and allow installation from that source when Android asks. Grant microphone permission when using voice input.
+## Android platform limitations
+- Wi-Fi direct on/off is restricted for ordinary apps on modern Android; this app opens system settings.
+- Bluetooth uses the system panel/settings rather than bypassing user controls.
+- Calls open the dialer for user confirmation. Ending calls programmatically generally requires default-dialer role or privileged/system permissions.
+- Always-on wake-word detection is not implemented in this starter; it needs a dedicated low-power wake-word engine, foreground service, microphone permission and battery testing.
+- Speech recognition and TTS offline operation depends on Android speech/TTS services and downloaded language packs.
+- Camera image understanding/OCR, PDF reader, robust math solver, chat memory and the full offline LLM are planned integration modules, not yet implemented.
 
-## Requirements
-- JDK 17
-- Android Gradle Plugin 8.7.3
-- Android SDK Platform 35
-- Android device with Android 8.0 or newer
+## Recommended next input
+Provide the phone's exact model, RAM and Android version, plus the original V1 Android Studio ZIP if available. This is necessary to choose a practical quantized model and preserve V1.
