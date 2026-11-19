@@ -24,4 +24,3 @@ This update is based on the V2 project found in the user's Library and retains i
 3. Allow Gradle sync (internet required the first time for dependencies).
 4. Build > Build Bundle(s) / APK(s) > Build APK(s).
 
-No APK build was verified in this environment because Android SDK/Gradle build tooling is not configured here.
